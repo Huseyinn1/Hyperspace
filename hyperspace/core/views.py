@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from services.models import Service
 
 # Create your views here.
 def index(request):
@@ -14,8 +15,11 @@ def index(request):
                         </ul>
                     </div>
     """
+    
+    featured_services = Service.objects.filter(is_featured=True)
     context = {
-        'static_content':static_content
+        'static_content':static_content,
+        'featured_services':featured_services
     }
 
     return render(request,'core/index.html',context)
