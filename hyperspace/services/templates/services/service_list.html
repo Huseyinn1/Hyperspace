@@ -36,12 +36,15 @@
 						<div class="inner">
                             <div class="features">
                                 {% for service in services%}
+								<a href="{% url  'service_detail' service.slug %}">
                                 <section style="width: 100%">
                                     <span class="{{service.icon_class}}"></span>
                                     <h3>{{service.title}}</h3>
-                                    <p> {{service.description}}</p>
+                                    <p> {{service.description|truncatechars:100}}</p>
                                 </section>
+							</a>
                                 {% endfor %}
+
                             <div>
                                 <div>
 					</section>

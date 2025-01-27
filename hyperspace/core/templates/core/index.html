@@ -17,11 +17,15 @@
                         <p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet imperdiet est velit quis lorem.</p>
                         <div class="features">
                             {% for service in featured_services%}
+                            
                             <section >
-                                <span class="{{service.icon_class}}"></span>
-                                <h3>{{service.title}}</h3>
-                                <p> {{service.description}}</p>
+                            <a href="{% url  'service_detail' service.slug %}">
+                                    <span class="{{service.icon_class}}"></span>
+                                    <h3>{{service.title}}</h3>
+                                    <p> {{service.description | truncatechars:100}}</p>        
+                            </a>
                             </section>
+                
                             {% endfor %}
                         
                         </div>
