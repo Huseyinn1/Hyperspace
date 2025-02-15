@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from services.models import Service
-
+from blog.models import Blog
 # Create your views here.
 def index(request):
 
@@ -17,9 +17,11 @@ def index(request):
     """
     
     featured_services = Service.objects.filter(is_featured=True)
+    latest_posts = Blog.objects.all()[:3]
     context = {
         'static_content':static_content,
-        'featured_services':featured_services
+        'featured_services':featured_services,
+        'latest_posts' : latest_posts
     }
 
     return render(request,'core/index.html',context)
