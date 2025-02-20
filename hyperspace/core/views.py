@@ -1,5 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.conf import settings
+from django.core.mail import send_mail
+from django.contrib import messages
 from services.models import Service
 from blog.models import Blog
 # Create your views here.
@@ -25,3 +29,22 @@ def index(request):
     }
 
     return render(request,'core/index.html',context)
+
+def contact(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        
+        subject = f"Hyperspace Contact Form"
+        message_body = f"Message from {name}-{email}: \n\n {message}"
+        recipient_list = [settings.EMAIL_HOST_USER]
+        
+        try:
+            send_mail(subject,message_body,email,recipient_list)
+        except Exception:
+            messages.error(request,"Something happend")
+        else:
+            messages.success(request,"We have received your email")
+    
+    return HttpResponseRedirect(reverse('index')+'#three')
